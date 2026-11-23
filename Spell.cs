@@ -2,17 +2,17 @@ using System.Text;
 
 namespace SpellShop
 {
-    internal class Spell
+    internal abstract class Spell
     {
         //properties
         private string requiredIngredient; //hidden from player
 
         public string Name { get; private set; }
         public int EnergyCost { get; private set; }
-        public bool IsRequested { get; set; }
+        public bool IsRequested { get; protected set; }
 
         //constructors
-        public Spell(string name, string requiredIngredient, int energyCost)
+        protected Spell(string name, string requiredIngredient, int energyCost)
         {
             Name = name;
             this.requiredIngredient = requiredIngredient;
@@ -21,13 +21,15 @@ namespace SpellShop
         }
 
         //methods
-        public string Request()
+        public abstract string Describe();
+
+        public virtual string Request()
         {
             IsRequested = true;
             return $"A customer wants {Name}";
         }
 
-        public string Cast(Ingredient ingredient)
+        public virtual string Cast(Ingredient ingredient)
         {
             if (!IsRequested)
             {
